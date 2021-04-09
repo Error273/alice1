@@ -2,6 +2,7 @@ from flask import Flask, request
 import logging
 import json
 import random
+import os
 
 app = Flask(__name__)
 
@@ -45,7 +46,6 @@ def handle_dialog(res, req):
         res['response']['text'] = 'Игра "Угадай Город". Алиса показывает пользователю фотографию города,' \
                                   ' а он должен его отгадать.'
         return
-
 
     if sessionStorage[user_id]['first_name'] is None:
         first_name = get_first_name(req)
@@ -177,4 +177,5 @@ def get_first_name(req):
 
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
